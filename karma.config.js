@@ -15,7 +15,7 @@ module.exports = function (config) {
             'tests/libs/jasmine-matchers.js',
             'tests/spec/*.js',
             {
-                pattern: 'src/js/**/*.js',
+                pattern: 'src/**/*.js',
                 watched: true,
                 included: false,
                 served: false,
