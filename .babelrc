@@ -4,7 +4,15 @@
   ],
   "plugins": [
     "babel-plugin-add-module-exports",
-    "transform-es2015-modules-commonjs",
-    "transform-object-assign"
+    "babel-plugin-transform-async-to-generator",
+    "babel-plugin-transform-class-properties",
+    "babel-plugin-transform-es2015-destructuring",
+    "babel-plugin-transform-es2015-function-name",
+    "babel-plugin-transform-es2015-modules-commonjs",
+    "babel-plugin-transform-es2015-parameters",
+    "babel-plugin-transform-es2015-spread",
+    "babel-plugin-transform-es2015-sticky-regex",
+    "babel-plugin-transform-es2015-unicode-regex",
+    "babel-plugin-transform-object-rest-spread"
   ]
 }
