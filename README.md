@@ -1,5 +1,8 @@
 # zap-base-dom-element
 
+just translating (and testing) some old code to ES6,
+nothing to see here ;-)
+
 ## Install
 ```
 $ npm install zap-base-dom-element

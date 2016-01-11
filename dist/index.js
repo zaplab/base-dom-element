@@ -482,7 +482,9 @@ function getScroll(element) {
  * @param {Boolean} [checkForVendorStyles]
  * @returns void
  */
-function setStyles(element, styles, checkForVendorStyles = false) {
+function setStyles(element, styles) {
+    let checkForVendorStyles = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
     let finalPropertyName;
 
     for (const property in styles) {
@@ -503,7 +505,9 @@ function setStyles(element, styles, checkForVendorStyles = false) {
  * @param {Boolean} [parseIntVal]
  * @returns {String|Number}
  */
-function getStyle(element, property, parseIntVal = false) {
+function getStyle(element, property) {
+    let parseIntVal = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
     const value = element.style[property] || window.getComputedStyle(element, null)[property];
 
     return parseIntVal ? (0, _zapBaseJsNumber.parseInt)(value) : value;
