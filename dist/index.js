@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.create = create;
 exports.replace = replace;
+exports.clear = clear;
 exports.remove = remove;
 exports.destroy = destroy;
 exports.prepend = prepend;
@@ -35,6 +36,11 @@ var _zapBaseJsString = require('zap-base-js-string');
 const document = window.document;
 
 /**
+ * @type {CSSStyleDeclaration}
+ */
+const dummyStyle = document.createElement('div').style;
+
+/**
  * @type {Number}
  */
 let uniqueID = 0;
@@ -43,14 +49,8 @@ let uniqueID = 0;
  * @type {Object}
  */
 const specialEvents = {
-    transitionstart: {
-        '': 'transitionstart',
-        'webkit': 'webkitTransitionStart',
-        'Moz': 'transitionstart',
-        'ms': 'MSTransitionStart',
-        'O': 'otransitionstart'
-    },
     transitionend: {
+        'supportCheck': 'transition',
         '': 'transitionend',
         'webkit': 'webkitTransitionEnd',
         'Moz': 'transitionend',
@@ -58,6 +58,7 @@ const specialEvents = {
         'O': 'otransitionend'
     },
     animationstart: {
+        'supportCheck': 'animation',
         '': 'animationstart',
         'webkit': 'webkitAnimationStart',
         'Moz': 'animationstart',
@@ -65,6 +66,7 @@ const specialEvents = {
         'O': 'oanimationstart'
     },
     animationend: {
+        'supportCheck': 'animation',
         '': 'animationend',
         'webkit': 'webkitAnimationEnd',
         'Moz': 'animationend',
@@ -72,6 +74,7 @@ const specialEvents = {
         'O': 'oanimationend'
     },
     animationiteration: {
+        'supportCheck': 'animation',
         '': 'animationiteration',
         'webkit': 'webkitIteration',
         'Moz': 'animationiteration',
@@ -138,6 +141,19 @@ function create(tagName, options) {
  */
 function replace(element, target) {
     target.parentNode.replaceChild(element, target);
+}
+
+/**
+ * @param {Element} element
+ * @returns void
+ */
+function clear(element) {
+    let firstChild;
+
+    while (firstChild = element.firstChild) {
+        // eslint-disable-line no-cond-assign
+        element.removeChild(firstChild);
+    }
 }
 
 /**
@@ -218,9 +234,14 @@ function after(element, target) {
  * @param {Element} element
  * @param {String} eventName
  * @param {Function} eventFunction
+ * @param {Object} [options]
  * @returns void
  */
 function addEvent(element, eventName, eventFunction) {
+    let options = arguments.length <= 3 || arguments[3] === undefined ? {
+        call: false
+    } : arguments[3];
+
     _uniqueID(element);
 
     let events = (0, _zapBaseDomData.retrieve)(element, 'zapEvents');
@@ -231,7 +252,7 @@ function addEvent(element, eventName, eventFunction) {
     }
 
     if (typeof specialEvents[eventName] !== 'undefined') {
-        const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+        const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
         if (vendor !== false) {
             eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -249,6 +270,10 @@ function addEvent(element, eventName, eventFunction) {
     events[eventName].push(eventFunction);
 
     element.addEventListener(eventName, eventFunction, false);
+
+    if (options.call) {
+        eventFunction();
+    }
 }
 
 /**
@@ -280,7 +305,7 @@ function removeEvent(element, eventName, eventFunction) {
 
     if (eventName) {
         if (typeof specialEvents[eventName] !== 'undefined') {
-            const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+            const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
             if (vendor !== false) {
                 eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -335,7 +360,7 @@ function fireEvent(element, eventName, args) {
     }
 
     if (typeof specialEvents[eventName] !== 'undefined') {
-        const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+        const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
         if (vendor !== false) {
             eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -353,14 +378,15 @@ function fireEvent(element, eventName, args) {
     }
 }
 
-const dummyStyle = document.createElement('div').style;
-
 /**
  * example: zapBaseElement.getSupportedVendorProperty('transform'); -> webkitTransform
  * @param {String} property
+ * @param {Boolean} [getVendor] just get the vendor prefix (like webkit)
  * @returns {Boolean|String}
  */
 function getSupportedVendorProperty(property) {
+    let getVendor = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
     const vendors = ['', 'webkit', 'Moz', 'ms', 'O'];
     const vendorsLength = vendors.length;
 
@@ -368,7 +394,7 @@ function getSupportedVendorProperty(property) {
         const finalPropertyName = i ? vendors[i] + (0, _zapBaseJsString.capitalizeFirstLetter)(property) : property;
 
         if (finalPropertyName in dummyStyle) {
-            return finalPropertyName;
+            return getVendor ? vendors[i] : finalPropertyName;
         }
     }
 
