@@ -61,3 +61,11 @@ zapElementCreate('button', {
 ```js
 replace(newElement, elementToReplace);
 ```
+
+### clear
+
+removes all inner elements
+
+```js
+clear(element);
+```

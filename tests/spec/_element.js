@@ -2,6 +2,7 @@
 import {
     create as zapElementCreate,
     replace as zapElementReplace,
+    clear as zapElementClear,
     remove as zapElementRemove,
     destroy as zapElementDestroy,
     prepend as zapElementPrepend,
@@ -67,6 +68,23 @@ describe('zap-base-dom-element', () => {
         it('should have events', () => {
             DOMElement.click();
             expect(innerFunctionSpy).toHaveBeenCalledWith(DOMElement);
+        });
+    });
+
+    describe('element clear', () => {
+        const DOMElement = document.createElement('div');
+        const innerElement1 = document.createElement('div');
+        innerElement1.textContent = 'inner1';
+        const innerElement2 = document.createElement('div');
+        innerElement2.textContent = 'inner2';
+        DOMElement.appendChild(innerElement1);
+        DOMElement.appendChild(innerElement2);
+        document.body.appendChild(DOMElement);
+
+        it('element should be empty', () => {
+            expect(DOMElement.innerHTML).toBe(innerElement1.outerHTML + innerElement2.outerHTML);
+            zapElementClear(DOMElement);
+            expect(DOMElement.innerHTML).toBe('');
         });
     });
 

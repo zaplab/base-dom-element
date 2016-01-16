@@ -131,6 +131,18 @@ export function replace(element, target) {
  * @param {Element} element
  * @returns void
  */
+export function clear(element) {
+    let firstChild;
+
+    while (firstChild = element.firstChild) { // eslint-disable-line no-cond-assign
+        element.removeChild(firstChild);
+    }
+}
+
+/**
+ * @param {Element} element
+ * @returns void
+ */
 export function remove(element) {
     const parent = element.parentNode;
 

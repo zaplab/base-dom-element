@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.create = create;
 exports.replace = replace;
+exports.clear = clear;
 exports.remove = remove;
 exports.destroy = destroy;
 exports.prepend = prepend;
@@ -140,6 +141,19 @@ function create(tagName, options) {
  */
 function replace(element, target) {
     target.parentNode.replaceChild(element, target);
+}
+
+/**
+ * @param {Element} element
+ * @returns void
+ */
+function clear(element) {
+    let firstChild;
+
+    while (firstChild = element.firstChild) {
+        // eslint-disable-line no-cond-assign
+        element.removeChild(firstChild);
+    }
 }
 
 /**
