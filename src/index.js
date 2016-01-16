@@ -200,9 +200,12 @@ export function after(element, target) {
  * @param {Element} element
  * @param {String} eventName
  * @param {Function} eventFunction
+ * @param {Object} [options]
  * @returns void
  */
-export function addEvent(element, eventName, eventFunction) {
+export function addEvent(element, eventName, eventFunction, options = {
+    call: false,
+}) {
     _uniqueID(element);
 
     let events = zapDataRetrieve(element, 'zapEvents');
@@ -231,6 +234,10 @@ export function addEvent(element, eventName, eventFunction) {
     events[eventName].push(eventFunction);
 
     element.addEventListener(eventName, eventFunction, false);
+
+    if (options.call) {
+        eventFunction();
+    }
 }
 
 /**

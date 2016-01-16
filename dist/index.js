@@ -215,9 +215,14 @@ function after(element, target) {
  * @param {Element} element
  * @param {String} eventName
  * @param {Function} eventFunction
+ * @param {Object} [options]
  * @returns void
  */
 function addEvent(element, eventName, eventFunction) {
+    let options = arguments.length <= 3 || arguments[3] === undefined ? {
+        call: false
+    } : arguments[3];
+
     _uniqueID(element);
 
     let events = (0, _zapBaseDomData.retrieve)(element, 'zapEvents');
@@ -246,6 +251,10 @@ function addEvent(element, eventName, eventFunction) {
     events[eventName].push(eventFunction);
 
     element.addEventListener(eventName, eventFunction, false);
+
+    if (options.call) {
+        eventFunction();
+    }
 }
 
 /**
