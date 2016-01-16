@@ -43,14 +43,8 @@ let uniqueID = 0;
  * @type {Object}
  */
 const specialEvents = {
-    transitionstart: {
-        '': 'transitionstart',
-        'webkit': 'webkitTransitionStart',
-        'Moz': 'transitionstart',
-        'ms': 'MSTransitionStart',
-        'O': 'otransitionstart'
-    },
     transitionend: {
+        'supportCheck': 'transition',
         '': 'transitionend',
         'webkit': 'webkitTransitionEnd',
         'Moz': 'transitionend',
@@ -58,6 +52,7 @@ const specialEvents = {
         'O': 'otransitionend'
     },
     animationstart: {
+        'supportCheck': 'animation',
         '': 'animationstart',
         'webkit': 'webkitAnimationStart',
         'Moz': 'animationstart',
@@ -65,6 +60,7 @@ const specialEvents = {
         'O': 'oanimationstart'
     },
     animationend: {
+        'supportCheck': 'animation',
         '': 'animationend',
         'webkit': 'webkitAnimationEnd',
         'Moz': 'animationend',
@@ -72,6 +68,7 @@ const specialEvents = {
         'O': 'oanimationend'
     },
     animationiteration: {
+        'supportCheck': 'animation',
         '': 'animationiteration',
         'webkit': 'webkitIteration',
         'Moz': 'animationiteration',
@@ -231,7 +228,7 @@ function addEvent(element, eventName, eventFunction) {
     }
 
     if (typeof specialEvents[eventName] !== 'undefined') {
-        const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+        const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
         if (vendor !== false) {
             eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -280,7 +277,7 @@ function removeEvent(element, eventName, eventFunction) {
 
     if (eventName) {
         if (typeof specialEvents[eventName] !== 'undefined') {
-            const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+            const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
             if (vendor !== false) {
                 eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -335,7 +332,7 @@ function fireEvent(element, eventName, args) {
     }
 
     if (typeof specialEvents[eventName] !== 'undefined') {
-        const vendor = getSupportedVendorProperty(specialEvents[eventName]);
+        const vendor = getSupportedVendorProperty(specialEvents[eventName].supportCheck, true);
 
         if (vendor !== false) {
             eventName = specialEvents[eventName][vendor]; // eslint-disable-line no-param-reassign
@@ -358,9 +355,12 @@ const dummyStyle = document.createElement('div').style;
 /**
  * example: zapBaseElement.getSupportedVendorProperty('transform'); -> webkitTransform
  * @param {String} property
+ * @param {Boolean} [getVendor] just get the vendor prefix (like webkit)
  * @returns {Boolean|String}
  */
 function getSupportedVendorProperty(property) {
+    let getVendor = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
     const vendors = ['', 'webkit', 'Moz', 'ms', 'O'];
     const vendorsLength = vendors.length;
 
@@ -368,7 +368,7 @@ function getSupportedVendorProperty(property) {
         const finalPropertyName = i ? vendors[i] + (0, _zapBaseJsString.capitalizeFirstLetter)(property) : property;
 
         if (finalPropertyName in dummyStyle) {
-            return finalPropertyName;
+            return getVendor ? vendors[i] : finalPropertyName;
         }
     }
 
