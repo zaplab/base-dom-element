@@ -20,6 +20,11 @@ import {
 const document = window.document;
 
 /**
+ * @type {CSSStyleDeclaration}
+ */
+const dummyStyle = document.createElement('div').style;
+
+/**
  * @type {Number}
  */
 let uniqueID = 0;
@@ -341,8 +346,6 @@ export function fireEvent(element, eventName, args) {
         events[eventName][i](args);
     }
 }
-
-const dummyStyle = document.createElement('div').style;
 
 /**
  * example: zapBaseElement.getSupportedVendorProperty('transform'); -> webkitTransform
