@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.cssTransformSupported = exports.cssTransitionSupported = undefined;
 exports.create = create;
 exports.replace = replace;
 exports.clear = clear;
@@ -560,3 +561,17 @@ function setVendorStyle(element, property, value) {
         element.style[property] = value;
     }
 }
+
+/**
+ * @var {Boolean}
+ */
+const cssTransitionSupported = exports.cssTransitionSupported = (function transitionSupported() {
+    return getSupportedVendorProperty('transition') !== false;
+})();
+
+/**
+ * @var {Boolean}
+ */
+const cssTransformSupported = exports.cssTransformSupported = (function transformSupported() {
+    return getSupportedVendorProperty('transform') !== false;
+})();
