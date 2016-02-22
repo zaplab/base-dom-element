@@ -30,6 +30,8 @@ import {
     getScroll as zapElementGetScroll,
     setVendorStyle,
     getSupportedVendorProperty,
+    cssTransitionSupported,
+    cssTransformSupported,
 } from 'zap-base-dom-element';
 ```
 

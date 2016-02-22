@@ -409,7 +409,7 @@ export function getSize(element) {
 /**
  * @param {Element} element
  * @param {Object} [options]
- * @returns {Object}
+ * @returns {{x, y}}
  */
 export function getPosition(element, options) {
     const getBoundingClientRect = element.getBoundingClientRect();
@@ -535,3 +535,17 @@ export function setVendorStyle(element, property, value) {
         element.style[property] = value;
     }
 }
+
+/**
+ * @var {Boolean}
+ */
+export const cssTransitionSupported = (function transitionSupported() {
+    return getSupportedVendorProperty('transition') !== false;
+})();
+
+/**
+ * @var {Boolean}
+ */
+export const cssTransformSupported = (function transformSupported() {
+    return getSupportedVendorProperty('transform') !== false;
+})();

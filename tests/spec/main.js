@@ -17,6 +17,8 @@ import {
     getScroll as zapElementGetScroll,
     setVendorStyle,
     getSupportedVendorProperty,
+    cssTransitionSupported,
+    cssTransformSupported,
 } from 'zap-base-dom-element';
 
 describe('zap-base-dom-element', () => {
@@ -75,6 +77,14 @@ describe('zap-base-dom-element', () => {
 
         it('setVendorStyle', () => {
             expect(setVendorStyle).toEqual(jasmine.any(Function));
+        });
+
+        it('cssTransitionSupported', () => {
+            expect(cssTransitionSupported).toEqual(jasmine.any(Boolean));
+        });
+
+        it('cssTransformSupported', () => {
+            expect(cssTransformSupported).toEqual(jasmine.any(Boolean));
         });
     });
 });
