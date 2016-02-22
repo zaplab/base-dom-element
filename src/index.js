@@ -409,7 +409,7 @@ export function getSize(element) {
 /**
  * @param {Element} element
  * @param {Object} [options]
- * @returns {Object}
+ * @returns {{x, y}}
  */
 export function getPosition(element, options) {
     const getBoundingClientRect = element.getBoundingClientRect();
