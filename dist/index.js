@@ -565,13 +565,13 @@ function setVendorStyle(element, property, value) {
 /**
  * @var {Boolean}
  */
-const cssTransitionSupported = exports.cssTransitionSupported = (function transitionSupported() {
+const cssTransitionSupported = exports.cssTransitionSupported = function transitionSupported() {
     return getSupportedVendorProperty('transition') !== false;
-})();
+}();
 
 /**
  * @var {Boolean}
  */
-const cssTransformSupported = exports.cssTransformSupported = (function transformSupported() {
+const cssTransformSupported = exports.cssTransformSupported = function transformSupported() {
     return getSupportedVendorProperty('transform') !== false;
-})();
+}();
