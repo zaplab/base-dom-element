@@ -1,4 +1,4 @@
-# zap-base-dom-element
+# zap-base-dom-element [![Build Status](https://travis-ci.org/zaplab/base-dom-element.svg?branch=master)](https://travis-ci.org/zaplab/base-dom-element)
 
 just translating (and testing) some old code to ES6,
 nothing to see here ;-)
