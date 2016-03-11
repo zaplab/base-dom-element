@@ -2,13 +2,11 @@
 import del from 'del';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
-import concat from 'gulp-concat';
 import eslint from 'gulp-eslint';
 import runSequence from 'run-sequence';
 import eventStream from 'event-stream';
 import gutil from 'gulp-util';
 import webpack from 'webpack';
-import path from 'path';
 
 gulp.task('clean', gulpCallback => {
     del([
@@ -29,7 +27,7 @@ gulp.task('eslint', () => {
 
 // for easier debugging of the generated spec bundle
 gulp.task('specs:debug', gulpCallback => {
-    let webpackConfig = Object.assign({}, require('./webpack.config.js'), {
+    const webpackConfig = Object.assign({}, require('./webpack.config.js'), {
         context: __dirname,
         entry: [
             'tests/spec/main.js',
