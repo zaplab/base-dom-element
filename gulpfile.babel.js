@@ -1,16 +1,14 @@
 
-'use strict';
-
-const del = require('del');
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const concat = require('gulp-concat');
-const eslint = require('gulp-eslint');
-const runSequence = require('run-sequence');
-const eventStream = require('event-stream');
-const gutil = require('gulp-util');
-const webpack = require('webpack');
-const path = require('path');
+import del from 'del';
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import concat from 'gulp-concat';
+import eslint from 'gulp-eslint';
+import runSequence from 'run-sequence';
+import eventStream from 'event-stream';
+import gutil from 'gulp-util';
+import webpack from 'webpack';
+import path from 'path';
 
 gulp.task('clean', gulpCallback => {
     del([
