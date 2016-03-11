@@ -57,6 +57,6 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start"
   }
 }
