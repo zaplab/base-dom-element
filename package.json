@@ -11,9 +11,9 @@
     "url": "https://github.com/zaplab/base-dom-element.git"
   },
   "dependencies": {
-    "zap-base-dom-data": "0.1.0",
-    "zap-base-js-number": "0.0.2",
-    "zap-base-js-string": "0.0.2"
+    "zap-base-dom-data": "^1.0.0",
+    "zap-base-js-number": "^1.0.0",
+    "zap-base-js-string": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
