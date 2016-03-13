@@ -32,7 +32,7 @@ var _zapBaseJsNumber = require('zap-base-js-number');
 var _zapBaseJsString = require('zap-base-js-string');
 
 /**
- * @type {Element}
+ * @type {HTMLDocument}
  */
 const document = window.document;
 
