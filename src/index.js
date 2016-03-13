@@ -15,7 +15,7 @@ import {
 } from 'zap-base-js-string';
 
 /**
- * @type {Element}
+ * @type {HTMLDocument}
  */
 const document = window.document;
 
